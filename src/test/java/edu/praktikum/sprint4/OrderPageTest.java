@@ -1,56 +1,87 @@
 package edu.praktikum.sprint4;
 
-import edu.praktikum.sprint4.pom.MainPage;
+import static edu.praktikum.sprint4.CONSTANTS.ConstantsMainPage.URL;
+import edu.praktikum.sprint4.utils.RandomValuesForOrder;
 import edu.praktikum.sprint4.pom.OrderPage;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
+
+@RunWith(Parameterized.class)
 public class OrderPageTest {
 
     private WebDriver webDriver;
+    private final String name;
+    private final String surname;
+    private final String address;
+    private final String phone;
+
+    private final By orderButton;
+    private final String dateOfOrder;
+
+    public OrderPageTest(String name, String surname, String address, String phone, By orderButton, String dateOfOrder) {
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.phone = phone;
+        this.orderButton = orderButton;
+        this.dateOfOrder = dateOfOrder;
+    }
+
+    @Parameterized.Parameters
+    public static Object[][] getOrder() {
+        return new Object[][] {
+                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Сахарова 9", RandomValuesForOrder.phoneNumber(), OrderPage.orderButtonForOrderOne, OrderPage.nextDayDate()},
+                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Пушкина 109", RandomValuesForOrder.phoneNumber(), OrderPage.orderButtonForOrderSecond, OrderPage.nextDayDate()},
+        };
+    }
 
     @Before
     public void setup() {
         //Запуск через Firefox
-        System.setProperty("webdriver.gecko.driver","/Users/ilyarua/geckodriver-mac-arm64/geckodriver");
         FirefoxOptions options = new FirefoxOptions();
         webDriver = new FirefoxDriver(options);
 
         //Запуск через chrome
-        //webDriver = new ChromeDriver();
+//        webDriver = new ChromeDriver();
 
-        webDriver.manage().timeouts().implicitlyWait(Duration.of(3, SECONDS));
-        webDriver.get("https://qa-scooter.praktikum-services.ru/");
+        webDriver.manage().timeouts().implicitlyWait(Duration.of(10, SECONDS));
+        webDriver.get(URL);
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions
+                        .visibilityOfElementLocated(By
+                                .xpath("//*[@id=\"rcc-confirm-button\"]")));
+        webDriver.findElement(By.xpath("//*[@id=\"rcc-confirm-button\"]")).click();
     }
 
     @Test
     public void orderSuccessful() {
         OrderPage orderPage = new OrderPage(webDriver);
 
-        orderPage.clickOrderButton();
+        orderPage.clickOrderButton(orderButton);
 
         //Переход на первую вкладку заказа
-        orderPage.inputFirstNameForOrderInput();
-        orderPage.inputSurnameForOrderInput();
-        orderPage.inputAddressForOrderInput("Сахарова");
-        orderPage.clickMetroForOrderInput();
-        orderPage.clickMetroForOrderChoice();
-        orderPage.inputPhoneForOrderInput();
+        orderPage.setData(name, surname, address, phone);
+        orderPage.setMetroField();
         orderPage.clickNextButton();
 
         //Переход на вторую страницу заказа
-        orderPage.enterDataForOrderInput();
+        orderPage.enterDataForOrderInput(dateOfOrder);
         orderPage.clickAmountOfDaysForOrderInput();
         orderPage.clickAmountOfDaysForOrderChoice();
         orderPage.clickColourForOrderChoice();
@@ -63,7 +94,6 @@ public class OrderPageTest {
         orderPage.assertEqualsExpectedOrder();
 
     }
-
 
     @After
     public void tearDown() {
