@@ -5,6 +5,7 @@ import static edu.praktikum.sprint4.CONSTANTS.ConstantsMainPage.*;
 import static edu.praktikum.sprint4.CONSTANTS.ConstantsMainPage.URL;
 import edu.praktikum.sprint4.pom.MainPage;
 
+import edu.praktikum.sprint4.pom.OrderPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,33 +41,32 @@ public class MainPageTest {
     @Parameterized.Parameters
     public static Object[][] getTestData() {
         return new Object[][] {
-                {MainPage.firstQuestion, By.xpath("//*[@id='accordion__panel-0']"), EXPECTED_TEXT_IN_FIRST_QUESTION},
-                {MainPage.secondQuestion, By.xpath("//*[@id='accordion__panel-1']"), EXPECTED_TEXT_IN_SECOND_QUESTION},
-                {MainPage.thirdQuestion, By.xpath("//*[@id='accordion__panel-2']"), EXPECTED_TEXT_IN_THIRD_QUESTION},
-                {MainPage.fourthQuestion, By.xpath("//*[@id='accordion__panel-3']"), EXPECTED_TEXT_IN_FOURTH_QUESTION},
-                {MainPage.fifthQuestion, By.xpath("//*[@id='accordion__panel-4']"), EXPECTED_TEXT_IN_FIFTH_QUESTION},
-                {MainPage.sixthQuestion, By.xpath("//*[@id='accordion__panel-5']"), EXPECTED_TEXT_IN_SIXTH_QUESTION},
-                {MainPage.seventhQuestion, By.xpath("//*[@id='accordion__panel-6']"), EXPECTED_TEXT_IN_SEVENTH_QUESTION},
-                {MainPage.eighthQuestion, By.xpath("//*[@id='accordion__panel-7']"), EXPECTED_TEXT_IN_EIGHTH_QUESTION}
+                {MainPage.firstQuestion, MainPage.firstAnswer, EXPECTED_TEXT_IN_FIRST_QUESTION},
+                {MainPage.secondQuestion, MainPage.secondAnswer, EXPECTED_TEXT_IN_SECOND_QUESTION},
+                {MainPage.thirdQuestion, MainPage.thirdAnswer, EXPECTED_TEXT_IN_THIRD_QUESTION},
+                {MainPage.fourthQuestion, MainPage.fourthAnswer, EXPECTED_TEXT_IN_FOURTH_QUESTION},
+                {MainPage.fifthQuestion, MainPage.fifthAnswer, EXPECTED_TEXT_IN_FIFTH_QUESTION},
+                {MainPage.sixthQuestion, MainPage.sixthAnswer, EXPECTED_TEXT_IN_SIXTH_QUESTION},
+                {MainPage.seventhQuestion, MainPage.seventhAnswer, EXPECTED_TEXT_IN_SEVENTH_QUESTION},
+                {MainPage.eighthQuestion, MainPage.eighthAnswer, EXPECTED_TEXT_IN_EIGHTH_QUESTION}
         };
     }
 
     @Before
     public void setup() {
         //Запуск через Firefox
-//        FirefoxOptions options = new FirefoxOptions();
-//        webDriver = new FirefoxDriver(options);
+        FirefoxOptions options = new FirefoxOptions();
+        webDriver = new FirefoxDriver(options);
 
         //Запуск через chrome
-        webDriver = new ChromeDriver();
+        //webDriver = new ChromeDriver();
 
-        webDriver.manage().timeouts().implicitlyWait(Duration.of(10, SECONDS));
         webDriver.get(URL);
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions
-                        .visibilityOfElementLocated(By
-                                .xpath("//*[@id=\"rcc-confirm-button\"]")));
-        webDriver.findElement(By.xpath("//*[@id=\"rcc-confirm-button\"]")).click();
+                        .visibilityOfElementLocated(OrderPage.cookieButton));
+        webDriver.findElement(OrderPage.cookieButton).click();
+        webDriver.manage().timeouts().implicitlyWait(Duration.of(10, SECONDS));
 
     }
 

@@ -18,8 +18,10 @@ public class OrderPage {
 
     private final WebDriver webDriver;
     //Кнопки заказать
-    public static By orderButtonForOrderOne = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-    public static By orderButtonForOrderSecond = By.xpath(".//button[@class='Button_Button__ra12g']");
+    public static final By orderButtonTop = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    public static final By orderButtonBottom = By.xpath(".//button[@class='Button_Button__ra12g']");
+    //Принять куки
+    public static final By cookieButton = By.xpath("//*[@id='rcc-confirm-button']");
     //Первая вкладка заказа
     private final By firstNameForOrderInput = By.xpath(".//input[@placeholder='* Имя']");
     private final By surnameForOrderInput = By.xpath(".//input[@placeholder='* Фамилия']");
@@ -102,7 +104,7 @@ public class OrderPage {
     }
 
     public void clickOrderButtonForOrder() {
-        webDriver.findElement(orderButtonForOrderOne).click();
+        webDriver.findElement(orderButtonTop).click();
     }
 
     public void clickConfirmationForOrder() {

@@ -46,8 +46,8 @@ public class OrderPageTest {
     @Parameterized.Parameters
     public static Object[][] getOrder() {
         return new Object[][] {
-                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Сахарова 9", RandomValuesForOrder.phoneNumber(), OrderPage.orderButtonForOrderOne, OrderPage.nextDayDate()},
-                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Пушкина 109", RandomValuesForOrder.phoneNumber(), OrderPage.orderButtonForOrderSecond, OrderPage.nextDayDate()},
+                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Сахарова 9", RandomValuesForOrder.phoneNumber(), OrderPage.orderButtonTop, OrderPage.nextDayDate()},
+                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Пушкина 109", RandomValuesForOrder.phoneNumber(), OrderPage.orderButtonBottom, OrderPage.nextDayDate()},
         };
     }
 
@@ -64,9 +64,8 @@ public class OrderPageTest {
         webDriver.get(URL);
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions
-                        .visibilityOfElementLocated(By
-                                .xpath("//*[@id=\"rcc-confirm-button\"]")));
-        webDriver.findElement(By.xpath("//*[@id=\"rcc-confirm-button\"]")).click();
+                        .visibilityOfElementLocated(OrderPage.cookieButton));
+        webDriver.findElement(OrderPage.cookieButton).click();
     }
 
     @Test
