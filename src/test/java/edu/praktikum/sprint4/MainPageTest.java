@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -41,14 +40,14 @@ public class MainPageTest {
     @Parameterized.Parameters
     public static Object[][] getTestData() {
         return new Object[][] {
-                {MainPage.firstQuestion, MainPage.firstAnswer, EXPECTED_TEXT_IN_FIRST_QUESTION},
-                {MainPage.secondQuestion, MainPage.secondAnswer, EXPECTED_TEXT_IN_SECOND_QUESTION},
-                {MainPage.thirdQuestion, MainPage.thirdAnswer, EXPECTED_TEXT_IN_THIRD_QUESTION},
-                {MainPage.fourthQuestion, MainPage.fourthAnswer, EXPECTED_TEXT_IN_FOURTH_QUESTION},
-                {MainPage.fifthQuestion, MainPage.fifthAnswer, EXPECTED_TEXT_IN_FIFTH_QUESTION},
-                {MainPage.sixthQuestion, MainPage.sixthAnswer, EXPECTED_TEXT_IN_SIXTH_QUESTION},
-                {MainPage.seventhQuestion, MainPage.seventhAnswer, EXPECTED_TEXT_IN_SEVENTH_QUESTION},
-                {MainPage.eighthQuestion, MainPage.eighthAnswer, EXPECTED_TEXT_IN_EIGHTH_QUESTION}
+                {MainPage.FIRST_QUESTION, MainPage.FIRST_ANSWER, EXPECTED_TEXT_IN_FIRST_QUESTION},
+                {MainPage.SECOND_QUESTION, MainPage.SECOND_ANSWER, EXPECTED_TEXT_IN_SECOND_QUESTION},
+                {MainPage.THIRD_QUESTION, MainPage.THIRD_ANSWER, EXPECTED_TEXT_IN_THIRD_QUESTION},
+                {MainPage.FOURTH_QUESTION, MainPage.FOURTH_ANSWER, EXPECTED_TEXT_IN_FOURTH_QUESTION},
+                {MainPage.FIFTH_QUESTION, MainPage.FIFTH_ANSWER, EXPECTED_TEXT_IN_FIFTH_QUESTION},
+                {MainPage.SIXTH_QUESTION, MainPage.SIXTH_ANSWER, EXPECTED_TEXT_IN_SIXTH_QUESTION},
+                {MainPage.SEVENTH_QUESTION, MainPage.SEVENTH_ANSWER, EXPECTED_TEXT_IN_SEVENTH_QUESTION},
+                {MainPage.EIGHTH_QUESTION, MainPage.EIGHTH_ANSWER, EXPECTED_TEXT_IN_EIGHTH_QUESTION}
         };
     }
 

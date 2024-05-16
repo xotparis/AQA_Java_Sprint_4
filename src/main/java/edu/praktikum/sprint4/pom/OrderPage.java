@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Calendar;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.junit.Assert.assertEquals;
 
 
@@ -29,7 +30,7 @@ public class OrderPage {
     private final By metroForOrderInput = By.xpath(".//input[@placeholder='* Станция метро']");
     private final By metroForOrderChoice = By.xpath(".//button/div[text()='Сокольники']");
     private final By phoneForOrderInput = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
-    public static By nextButton = By.xpath(".//button[text()='Далее']");
+    private static final By NEXT_BUTTON = By.xpath(".//button[text()='Далее']");
     //Вторая вкладка заказа
     private final By dataForOrderInput = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
     private final By amountOfDaysForOrderInput = By.xpath(".//div[text()='* Срок аренды']");
@@ -72,7 +73,7 @@ public class OrderPage {
     //2 тест, первая вкладка
 
     public void clickNextButton() {
-        webDriver.findElement(nextButton).click();
+        webDriver.findElement(NEXT_BUTTON).click();
     }
 
     //2 тест, вторая вкладка
