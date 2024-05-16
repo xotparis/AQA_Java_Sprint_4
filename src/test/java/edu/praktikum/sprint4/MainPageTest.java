@@ -63,8 +63,8 @@ public class MainPageTest {
         webDriver.get(URL);
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions
-                        .visibilityOfElementLocated(OrderPage.cookieButton));
-        webDriver.findElement(OrderPage.cookieButton).click();
+                        .visibilityOfElementLocated(OrderPage.COOKIE_BUTTON));
+        webDriver.findElement(OrderPage.COOKIE_BUTTON).click();
         webDriver.manage().timeouts().implicitlyWait(Duration.of(10, SECONDS));
 
     }

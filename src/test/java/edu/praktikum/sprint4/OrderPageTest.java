@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -46,8 +45,8 @@ public class OrderPageTest {
     @Parameterized.Parameters
     public static Object[][] getOrder() {
         return new Object[][] {
-                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Сахарова 9", RandomValuesForOrder.phoneNumber(), OrderPage.orderButtonTop, OrderPage.nextDayDate()},
-                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Пушкина 109", RandomValuesForOrder.phoneNumber(), OrderPage.orderButtonBottom, OrderPage.nextDayDate()},
+                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Сахарова 9", RandomValuesForOrder.phoneNumber(), OrderPage.ORDER_BUTTON_TOP, OrderPage.nextDayDate()},
+                {RandomValuesForOrder.randomFirstNames(), RandomValuesForOrder.randomSurname(), "Пушкина 109", RandomValuesForOrder.phoneNumber(), OrderPage.ORDER_BUTTON_BOTTOM, OrderPage.nextDayDate()},
         };
     }
 
@@ -64,8 +63,8 @@ public class OrderPageTest {
         webDriver.get(URL);
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions
-                        .visibilityOfElementLocated(OrderPage.cookieButton));
-        webDriver.findElement(OrderPage.cookieButton).click();
+                        .visibilityOfElementLocated(OrderPage.COOKIE_BUTTON));
+        webDriver.findElement(OrderPage.COOKIE_BUTTON).click();
     }
 
     @Test

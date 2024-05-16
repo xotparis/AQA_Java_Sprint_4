@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Calendar;
 
-import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.junit.Assert.assertEquals;
 
 
@@ -19,10 +18,10 @@ public class OrderPage {
 
     private final WebDriver webDriver;
     //Кнопки заказать
-    public static final By orderButtonTop = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-    public static final By orderButtonBottom = By.xpath(".//button[@class='Button_Button__ra12g']");
+    public static final By ORDER_BUTTON_TOP = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    public static final By ORDER_BUTTON_BOTTOM = By.xpath(".//button[@class='Button_Button__ra12g']");
     //Принять куки
-    public static final By cookieButton = By.xpath("//*[@id='rcc-confirm-button']");
+    public static final By COOKIE_BUTTON = By.xpath("//*[@id='rcc-confirm-button']");
     //Первая вкладка заказа
     private final By firstNameForOrderInput = By.xpath(".//input[@placeholder='* Имя']");
     private final By surnameForOrderInput = By.xpath(".//input[@placeholder='* Фамилия']");
@@ -105,7 +104,7 @@ public class OrderPage {
     }
 
     public void clickOrderButtonForOrder() {
-        webDriver.findElement(orderButtonTop).click();
+        webDriver.findElement(ORDER_BUTTON_TOP).click();
     }
 
     public void clickConfirmationForOrder() {
