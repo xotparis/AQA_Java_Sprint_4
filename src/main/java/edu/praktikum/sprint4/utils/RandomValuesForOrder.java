@@ -4,16 +4,16 @@ import java.util.Random;
 
 public class RandomValuesForOrder {
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     public static String phoneNumber() {
 
         // Генерируем случайное 10-значное число
         long randomNumber = 9;
         for (int i = 0; i < 9; i++) {
-            randomNumber = randomNumber * 10 + random.nextInt(10);
+            randomNumber = randomNumber * 10 + RANDOM.nextInt(10);
         }
-        return String.valueOf(randomNumber);
+        return String.valueOf("+7" + randomNumber);
     }
 
     public static String randomFirstNames() {
@@ -41,7 +41,7 @@ public class RandomValuesForOrder {
         };
 
         // Генерируем случайный индекс массива
-        int randomIndex = random.nextInt(firstNames.length);
+        int randomIndex = RANDOM.nextInt(firstNames.length);
 
         // Возвращаем случайную фамилию
         return firstNames[randomIndex];
@@ -72,7 +72,7 @@ public class RandomValuesForOrder {
         };
 
         // Генерируем случайный индекс массива
-        int randomIndex = random.nextInt(surname.length);
+        int randomIndex = RANDOM.nextInt(surname.length);
 
         // Возвращаем случайную фамилию
         return surname[randomIndex];

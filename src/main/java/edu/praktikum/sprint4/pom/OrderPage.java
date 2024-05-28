@@ -1,13 +1,15 @@
 package edu.praktikum.sprint4.pom;
 
-import edu.praktikum.sprint4.utils.RandomValuesForOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,23 +17,26 @@ import static org.junit.Assert.assertEquals;
 public class OrderPage {
 
     private final WebDriver webDriver;
+    //Кнопки заказать
+    public static final By ORDER_BUTTON_TOP = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    public static final By ORDER_BUTTON_BOTTOM = By.xpath(".//button[@class='Button_Button__ra12g']");
+    //Принять куки
+    public static final By COOKIE_BUTTON = By.xpath("//*[@id='rcc-confirm-button']");
     //Первая вкладка заказа
-    private final By orderButton = By.xpath(".//div[@style='transform: translateY(0px);']//button[text()='Заказать']");
     private final By firstNameForOrderInput = By.xpath(".//input[@placeholder='* Имя']");
     private final By surnameForOrderInput = By.xpath(".//input[@placeholder='* Фамилия']");
     private final By addressForOrderInput = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
     private final By metroForOrderInput = By.xpath(".//input[@placeholder='* Станция метро']");
     private final By metroForOrderChoice = By.xpath(".//button/div[text()='Сокольники']");
     private final By phoneForOrderInput = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
-    private final By nextButton = By.xpath(".//button[text()='Далее']");
+    private static final By NEXT_BUTTON = By.xpath(".//button[text()='Далее']");
     //Вторая вкладка заказа
     private final By dataForOrderInput = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
     private final By amountOfDaysForOrderInput = By.xpath(".//div[text()='* Срок аренды']");
     private final By amountOfDaysForOrderChoice = By.xpath(".//div[text()='сутки']");
     private final By colourForOrderChoice = By.xpath(".//input[@id='black']");
-    private final By orderButtonForOrder = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    //Подтверждение заказа
     private final By confirmationForOrder = By.xpath(".//button[text()='Да']");
-
     //Проверка выполнения заказа
     String expectedOrder = "Посмотреть статус";
     private final By actualOrder = By.xpath(".//button[contains(text(),'Посмотреть статус')]");
@@ -40,46 +45,50 @@ public class OrderPage {
         this.webDriver = webDriver;
     }
 
-    //2 тест, первая вкладка
-    public void clickOrderButton() {
-        webDriver.findElement(orderButton).click();
+    public void clickOrderButton(By locator) {
+        webDriver.findElement(locator).click();
     }
 
-    public void inputFirstNameForOrderInput() {
-        webDriver.findElement(firstNameForOrderInput).sendKeys(RandomValuesForOrder.randomFirstNames());
+    public void setFieldValue(By fieldLocator, String text) {
+        new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(fieldLocator));
+        webDriver.findElement(fieldLocator).sendKeys(text);
     }
 
-    public void inputSurnameForOrderInput() {
-        webDriver.findElement(surnameForOrderInput).sendKeys(RandomValuesForOrder.randomSurname());
+    public void setData(String name, String surname, String address, String phone) {
+        setFieldValue(firstNameForOrderInput, name);
+        setFieldValue(surnameForOrderInput, surname);
+        setFieldValue(addressForOrderInput, address);
+        setFieldValue(phoneForOrderInput, phone);
+        setMetroField();
     }
 
-    public void inputAddressForOrderInput(String textAddress) {
-        webDriver.findElement(addressForOrderInput).sendKeys(textAddress);
-    }
-
-    public void clickMetroForOrderInput() {
+    public void setMetroField() {
+        new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(metroForOrderInput));
         webDriver.findElement(metroForOrderInput).click();
-    }
-
-    public void clickMetroForOrderChoice() {
+        new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(metroForOrderChoice));
         webDriver.findElement(metroForOrderChoice).click();
     }
 
-    public void inputPhoneForOrderInput() {
-        webDriver.findElement(phoneForOrderInput).sendKeys("+7" + RandomValuesForOrder.phoneNumber());
-    }
+    //2 тест, первая вкладка
 
     public void clickNextButton() {
-        webDriver.findElement(nextButton).click();
+        webDriver.findElement(NEXT_BUTTON).click();
     }
 
     //2 тест, вторая вкладка
-    public void enterDataForOrderInput() {
-        //webDriver.findElement(dataForOrderInput).click();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String date = LocalDate.now().plusDays(1).format(formatter);
+    public void enterDataForOrderInput(String date) {
         webDriver.findElement(dataForOrderInput).sendKeys(date);
         webDriver.findElement(dataForOrderInput).sendKeys(Keys.ENTER);
+    }
+
+    public static String nextDayDate() {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        String tomorrowDate = sdf.format(calendar.getTime());
+
+        return tomorrowDate;
     }
 
     public void clickAmountOfDaysForOrderInput() {
@@ -95,7 +104,7 @@ public class OrderPage {
     }
 
     public void clickOrderButtonForOrder() {
-        webDriver.findElement(orderButtonForOrder).click();
+        webDriver.findElement(ORDER_BUTTON_TOP).click();
     }
 
     public void clickConfirmationForOrder() {
